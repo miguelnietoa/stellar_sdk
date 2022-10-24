@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - 'v*.[0-9]'
+      - "v*.[0-9]"
   pull_request:
 
 jobs:
@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        otp: ['22.3', '23.3']
-        elixir: ['1.10', '1.11']
+        otp: ["22.3", "23.3"]
+        elixir: ["1.10", "1.11"]
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       MIX_ENV: test
@@ -41,4 +41,21 @@ jobs:
       - name: Run Credo
         run: mix credo --strict
       - name: Run Excoveralls
-        run: mix coveralls.github
+        run: mix coveralls.github --parallel
+
+  finish:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set BUILD_NUMBER for Pull Request event
+        if: github.event_name == 'pull_request'
+        run: echo "BUILD_NUMBER=${{ github.event.pull_request.head.sha }}-PR-${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+      - name: Set BUILD_NUMBER for Push event
+        if: github.event_name == 'push'
+        run: echo "BUILD_NUMBER=${{ github.sha }}" >> $GITHUB_ENV
+      - name: Coveralls Finished
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          BUILD_NUMBER: ${{ env.BUILD_NUMBER }}
+        run: |
+          curl -k "https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN}" -d "payload[build_num]=${BUILD_NUMBER}&payload[status]=done"
