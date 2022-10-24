@@ -22,6 +22,7 @@ The **Stellar SDK** is composed of two complementary components: **`TxBuild`** +
 * [**Examples.**](/docs/README.md)
 
 ## Installation
+
 [**Available in Hex**][hex], add `stellar_sdk` to your list of dependencies in `mix.exs`:
 
 ```elixir
