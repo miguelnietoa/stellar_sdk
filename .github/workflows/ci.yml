@@ -43,4 +43,5 @@ jobs:
       - name: Run Credo
         run: mix credo --strict
       - name: Run Excoveralls
+        if: ${{ matrix.otp == '23.3' && matrix.elixir == '1.11' }}
         run: mix coveralls.github
