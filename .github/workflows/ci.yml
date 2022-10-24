@@ -55,7 +55,6 @@ jobs:
         run: echo "BUILD_NUMBER=${{ github.sha }}" >> $GITHUB_ENV
       - name: Coveralls Finished
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           BUILD_NUMBER: ${{ env.BUILD_NUMBER }}
         run: |
-          curl -k "https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN}" -d "payload[build_num]=${BUILD_NUMBER}&payload[status]=done"
+          curl -k "https://coveralls.io/webhook" -d "payload[build_num]=${BUILD_NUMBER}&payload[status]=done"
