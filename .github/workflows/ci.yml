@@ -44,7 +44,7 @@ jobs:
         run: mix credo --strict
       - name: Run Excoveralls
         run: mix coveralls.github --parallel
-
+      - run: echo "token:${COVERALLS_REPO_TOKEN}"
   finish:
     needs: tests
     runs-on: ubuntu-latest
@@ -53,4 +53,5 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
+          echo "token:${COVERALLS_REPO_TOKEN}"
           curl -k "https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN}" -d "payload[build_num]=${GITHUB_RUN_ID}&payload[status]=done"
