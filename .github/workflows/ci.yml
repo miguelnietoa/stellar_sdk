@@ -16,6 +16,9 @@ jobs:
         otp: ['22.3', '23.3']
         elixir: ['1.10', '1.11']
     env:
+      COVERALLS_PARALLEL: true
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       MIX_ENV: test
     steps:
       - uses: actions/checkout@v3
@@ -39,7 +42,5 @@ jobs:
         run: mix test
       - name: Run Credo
         run: mix credo --strict
-      # - name: Run Excoveralls
-      #   run: mix coveralls.github
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Excoveralls
+        run: mix coveralls.github
