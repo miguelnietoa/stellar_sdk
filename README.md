@@ -8,6 +8,7 @@
 The **Stellar SDK** enables the construction, signing and encoding of Stellar [transactions][stellar-docs-tx] and [operations][stellar-docs-list-operations] in **Elixir**, as well as provides a client for interfacing with [Horizon][horizon-api] server REST endpoints to retrieve ledger information, and to submit transactions.
 
 
+
 This library is aimed at developers building Elixir applications that interact with the [**Stellar network**][stellar].
 
 #### Protocol Version Support
