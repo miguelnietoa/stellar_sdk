@@ -41,7 +41,7 @@ jobs:
       - name: Run Credo
         run: mix credo --strict
       - name: Run Excoveralls
-        run: mix coveralls.github --parallel
+        run: mix coveralls.github --parallel --flagname otp-${{ matrix.otp }}-elixir-${{ matrix.elixir }}
 
   finish:
     needs: tests
