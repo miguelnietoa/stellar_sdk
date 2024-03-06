@@ -19,6 +19,7 @@ jobs:
       security-events: write
       # Used to receive a badge.
       id-token: write
+      issues: write
 
     steps:
       - name: Harden Runner
